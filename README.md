@@ -13,7 +13,7 @@ https://pre-onboarding-4.vercel.app/
 ![npm 순위](./public/images/2.png)
 
 - 유명한 라이브러리를 사용하고 싶었습니다. 그 이유는 커뮤니티가 형성되어 개발에 용이할 것이라고 생각했기 때문입니다. npm trends를 확인해보니 rechart와 react-chartjs-2가 압도적이었습니다. 하지만 react-chartjs-2와 비교했을때 두배 넘게 사용량이 많으므로 rechart를 선정했습니다.
-- rechart의 라이브러리를 살펴보니 제가 사용하고 싶은 차트 유형의 example을 확인 할 수 있어 쉽게 적용할거라 생각하여 해당 라이브러리로 정했습니다.
+- rechart의 document를 살펴보니 제가 사용하고 싶은 차트 유형의 example을 확인 할 수 있어 쉽게 적용할거라 생각하여 해당 라이브러리로 정했습니다.
 
 ---
 
@@ -23,7 +23,7 @@ https://pre-onboarding-4.vercel.app/
 
 주어진 json 데이터를 rechart가 요구하는 json 형태에 맞게 parsing
 
-```
+```jsx
 const parseData = (rowData: { [key: string]: Chart }) =>
   Object.entries(rowData).reduce(
     (acc: IChart[], [key, value]) => [...acc, { ...value, date: key }],
