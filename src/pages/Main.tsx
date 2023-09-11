@@ -65,7 +65,7 @@ export default function Main() {
             />
             <Tooltip
               content={<CustomTooltip />}
-              // wrapperStyle={{ outline: 'none' }}
+              wrapperStyle={{ outline: 'none' }}
             />
             <Legend />
             <Bar

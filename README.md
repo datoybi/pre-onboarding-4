@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+## ⛳목표
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+주어진 데이터를 기반으로 시계열 차트 만들기
 
-## Available Scripts
+![차트](./public/images/1.png)
 
-In the project directory, you can run:
+## 🔗배포
 
-### `npm start`
+https://pre-onboarding-4.vercel.app/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## rechart 라이브러리 선정 이유
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![npm 순위](./public/images/2.png)
 
-### `npm test`
+- 유명한 라이브러리를 사용하고 싶었습니다. 그 이유는 커뮤니티가 형성되어 개발에 용이할 것이라고 생각했기 때문입니다. npm trends를 확인해보니 rechart와 react-chartjs-2가 압도적이었습니다. 하지만 react-chartjs-2와 비교했을때 두배 넘게 사용량이 많으므로 rechart를 선정했습니다.
+- rechart의 라이브러리를 살펴보니 제가 사용하고 싶은 차트 유형의 example을 확인 할 수 있어 쉽게 적용할거라 생각하여 해당 라이브러리로 정했습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## ✅요구 사항
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 주어진 JSON 데이터의 `key`값(시간)을 기반으로 시계열 차트를 만들어주세요
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+주어진 json 데이터를 rechart가 요구하는 json 형태에 맞게 parsing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+const parseData = (rowData: { [key: string]: Chart }) =>
+  Object.entries(rowData).reduce(
+    (acc: IChart[], [key, value]) => [...acc, { ...value, date: key }],
+    []
+  );
+```
 
-### `npm run eject`
+### 특정 데이터 구역에 마우스 호버시 `id, value_area, value_bar` 데이터를 툴팁 형태로 제공해주세요
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+커스텀 툴팁을 이용하여 호버시 필요한 데이터 표출
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```jsx
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+import { styled } from 'styled-components';
+import { TooltipProps } from 'recharts';
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+const CustomTooltip = ({
+  active,
+  payload,
+}: TooltipProps<number, string>): JSX.Element | null => {
+  if (active && payload && payload.length) {
+    const [bar, _] = payload;
 
-## Learn More
+    return (
+      <Wrapper className="custom-tooltip">
+        <p className="desc">{bar.payload.id}</p>
+        <p className="desc">Area: {bar.payload.value_area}</p>
+        <p className="desc">Bar: {bar.payload.value_bar}</p>
+      </Wrapper>
+    );
+  }
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  return null;
+};
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export default CustomTooltip;
+
+```

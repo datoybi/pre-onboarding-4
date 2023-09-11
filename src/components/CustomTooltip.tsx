@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { styled } from 'styled-components';
-
 import { TooltipProps } from 'recharts';
 
 const CustomTooltip = ({

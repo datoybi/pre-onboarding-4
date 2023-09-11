@@ -13,7 +13,7 @@ const FilterList = ({ data, selectedList, setSelectedList }: Props) => {
   const filterList = getFilterList(data);
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO: 이렇게 추출하는 것 보다는 id나 name이나 dataset이나 다른 방법으로 받아올 생각하기
+    // TODO: 이렇게 추출하는 것 보다는 dataset이나 다른 방법으로 받아올 생각하기
     const filterId = (event.target as HTMLLIElement).textContent;
     if (typeof filterId !== 'string') return;
     if (filterId === '전체 헤제') {
