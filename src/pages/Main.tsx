@@ -9,6 +9,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Cell,
   Legend,
 } from 'recharts';
 
@@ -17,13 +18,17 @@ import FilterList from '../components/FilterList';
 
 export default function Main() {
   const chartData = useCharts();
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selectedList, setSelectedList] = useState<string[]>([]);
   console.log(chartData);
-  console.log(selected);
+  console.log(selectedList);
 
   return (
     <Wrapper>
-      <FilterList data={chartData} setSelected={setSelected} />
+      <FilterList
+        data={chartData}
+        selectedList={selectedList}
+        setSelectedList={setSelectedList}
+      />
       <ChartWrapper>
         <ResponsiveContainer>
           <ComposedChart data={chartData}>
@@ -47,7 +52,19 @@ export default function Main() {
               barSize={20}
               fill="#f1c40f"
               name="Bar"
-            />
+            >
+              {chartData.map((entry, index) => (
+                <Cell
+                  cursor="pointer"
+                  fill={
+                    selectedList.includes(entry.id)
+                      ? 'rgb(232, 76, 61)'
+                      : '#f1c40f'
+                  }
+                  key={`cell-${index}`}
+                />
+              ))}
+            </Bar>
             <Area
               yAxisId="right"
               type="monotone"

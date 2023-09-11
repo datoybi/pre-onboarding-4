@@ -1,24 +1,33 @@
 import { styled } from 'styled-components';
 import { IChart } from '../types';
 import { getFilterList } from '../utils';
+import FilterItem from './FilterItem';
 
 interface Props {
   data: IChart[];
-  setSelected: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedList: string[];
+  setSelectedList: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const FilterList = ({ data, setSelected }: Props) => {
+const FilterList = ({ data, selectedList, setSelectedList }: Props) => {
   const filterList = getFilterList(data);
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO: 이렇게 추출하는 것 보다는 id나 name이나 dataset이나 다른 방법으로 받아올 생각하기
     const filterId = (event.target as HTMLLIElement).textContent;
     if (typeof filterId !== 'string') return;
     if (filterId === '전체 헤제') {
-      setSelected(() => []);
-    } else {
-      setSelected(prevFilterId =>
-        Array.from(new Set([...prevFilterId, filterId]))
-      );
+      setSelectedList(() => []);
+      return;
+    }
+
+    const hasId = selectedList.includes(filterId);
+    if (hasId) {
+      const nextFilterList = selectedList.filter(item => item !== filterId);
+      setSelectedList(nextFilterList);
+    }
+    if (!hasId) {
+      setSelectedList(prevFilterId => [...prevFilterId, filterId]);
     }
   };
 
@@ -29,9 +38,12 @@ const FilterList = ({ data, setSelected }: Props) => {
       </li>
 
       {filterList.map(item => (
-        <li key={item}>
-          <button onClick={handleOnClick}>{item}</button>
-        </li>
+        <FilterItem
+          key={item}
+          name={item}
+          handleOnClick={handleOnClick}
+          selected={selectedList.includes(item)}
+        />
       ))}
     </List>
   );
