@@ -19,6 +19,24 @@ export default function Main() {
 
   return (
     <Wrapper>
+      <FilterList>
+        <li>
+          <button>전체 헤제</button>
+        </li>
+        <li>
+          <button>성북구</button>
+        </li>
+        <li>
+          <button>강남구</button>
+        </li>
+        <li>
+          <button>노원구</button>
+        </li>
+        <li>
+          <button>중랑구</button>
+        </li>
+      </FilterList>
+
       <div style={{ width: '100%', height: '500px' }}>
         <ResponsiveContainer>
           <ComposedChart data={chartData}>
@@ -65,4 +83,29 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+const FilterList = styled.ul`
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid black; */
+  width: 90%;
+
+  & > li > button {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 14px;
+  }
+
+  & > li > button:hover {
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out 0s;
+  }
+
+  & > li > button:active {
+    box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
+    position: relative;
+    top: 2px;
+  }
 `;
