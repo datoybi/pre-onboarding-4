@@ -1,4 +1,8 @@
 import { http } from './http';
-import { Chart } from '../types';
+import { RowChart } from '../types';
 
-export const fetchCharts = () => http.get<Chart>('/chart');
+// export const fetchCharts = () => http.get<RowChart[]>('/chart');
+
+export function getCharts() {
+  return http.get<RowChart>('/chart');
+}
