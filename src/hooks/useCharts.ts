@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'react';
 import { getCharts } from '../apis/remotes';
-import { RowChart, Chart } from '../types';
-
-interface ChartType extends Chart {
-  date: string;
-}
+import { RowChart, Chart, IChart } from '../types';
 
 const parseData = (rowData: { [key: string]: Chart }) =>
   Object.entries(rowData).reduce(
-    (acc: ChartType[], [key, value]) => [...acc, { ...value, date: key }],
+    (acc: IChart[], [key, value]) => [...acc, { ...value, date: key }],
     []
   );
 
-const useCharts = () => {
-  const [charts, setCharts] = useState<ChartType[]>();
+const useCharts = (): IChart[] => {
+  const [charts, setCharts] = useState<IChart[]>([]);
 
   useEffect(() => {
     const getChartData = async () => {
       const rowCharts: RowChart = await getCharts();
-      setCharts(parseData(rowCharts[0]));
+      if (Object.keys(rowCharts).length > 0) setCharts(parseData(rowCharts[0]));
     };
     void getChartData();
   }, []);

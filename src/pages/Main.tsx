@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { useState } from 'react';
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -12,32 +13,18 @@ import {
 } from 'recharts';
 
 import useCharts from '../hooks/useCharts';
+import FilterList from '../components/FilterList';
 
 export default function Main() {
   const chartData = useCharts();
+  const [selected, setSelected] = useState<string[]>([]);
   console.log(chartData);
+  console.log(selected);
 
   return (
     <Wrapper>
-      <FilterList>
-        <li>
-          <button>전체 헤제</button>
-        </li>
-        <li>
-          <button>성북구</button>
-        </li>
-        <li>
-          <button>강남구</button>
-        </li>
-        <li>
-          <button>노원구</button>
-        </li>
-        <li>
-          <button>중랑구</button>
-        </li>
-      </FilterList>
-
-      <div style={{ width: '100%', height: '500px' }}>
+      <FilterList data={chartData} setSelected={setSelected} />
+      <ChartWrapper>
         <ResponsiveContainer>
           <ComposedChart data={chartData}>
             <CartesianGrid stroke="#f5f5f5" />
@@ -71,7 +58,7 @@ export default function Main() {
             />
           </ComposedChart>
         </ResponsiveContainer>
-      </div>
+      </ChartWrapper>
     </Wrapper>
   );
 }
@@ -85,28 +72,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const FilterList = styled.ul`
-  margin: 30px 0 50px 0;
-  display: flex;
-  justify-content: space-around;
-  /* border: 1px solid black; */
-  width: 90%;
-  max-width: 700px;
-
-  & > li > button {
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 14px;
-  }
-
-  & > li > button:hover {
-    transform: scale(1.1);
-    transition: 0.2s ease-in-out 0s;
-  }
-
-  & > li > button:active {
-    box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
-    position: relative;
-    top: 2px;
-  }
+const ChartWrapper = styled.div`
+  width: 100%;
+  height: 500px;
 `;

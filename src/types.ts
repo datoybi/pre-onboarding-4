@@ -7,3 +7,6 @@ export interface Chart {
 export interface RowChart {
   0: { [key: string]: Chart };
 }
+export interface IChart extends Chart {
+  date: string;
+}
