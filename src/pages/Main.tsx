@@ -16,6 +16,7 @@ import { CategoricalChartFunc } from 'recharts/types/chart/generateCategoricalCh
 import useCharts from '../hooks/useCharts';
 import FilterList from '../components/FilterList';
 import { ComposedChartPayload } from '../types';
+import CustomTooltip from '../components/CustomTooltip';
 
 export default function Main() {
   const chartData = useCharts();
@@ -26,8 +27,7 @@ export default function Main() {
   const handleChartClick = ({ activePayload }: ComposedChartPayload) => {
     const filterId = activePayload[0]?.payload?.id;
 
-    // TODO: FilterList와 겹치는 코드! 리펙토링 요망
-    console.log(filterId);
+    // TODO: FilterList와 겹치는 코드! 리펙토링하기
     const hasId = selectedList.includes(filterId);
     if (hasId) {
       const nextFilterList = selectedList.filter(item => item !== filterId);
@@ -63,7 +63,10 @@ export default function Main() {
               domain={[0, 150]}
               label={{ value: 'value_area', position: 'top', offset: 20 }}
             />
-            <Tooltip />
+            <Tooltip
+              content={<CustomTooltip />}
+              // wrapperStyle={{ outline: 'none' }}
+            />
             <Legend />
             <Bar
               yAxisId="left"
