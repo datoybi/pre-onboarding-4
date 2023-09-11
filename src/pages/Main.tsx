@@ -86,11 +86,12 @@ const Wrapper = styled.div`
 `;
 
 const FilterList = styled.ul`
-  margin: 30px 0;
+  margin: 30px 0 50px 0;
   display: flex;
   justify-content: space-around;
   /* border: 1px solid black; */
   width: 90%;
+  max-width: 700px;
 
   & > li > button {
     padding: 10px;
