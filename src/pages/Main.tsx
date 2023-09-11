@@ -12,9 +12,10 @@ import {
   Cell,
   Legend,
 } from 'recharts';
-
+import { CategoricalChartFunc } from 'recharts/types/chart/generateCategoricalChart';
 import useCharts from '../hooks/useCharts';
 import FilterList from '../components/FilterList';
+import { ComposedChartPayload } from '../types';
 
 export default function Main() {
   const chartData = useCharts();
@@ -22,6 +23,21 @@ export default function Main() {
   console.log(chartData);
   console.log(selectedList);
 
+  const handleChartClick = ({ activePayload }: ComposedChartPayload) => {
+    const filterId = activePayload[0]?.payload?.id;
+
+    // TODO: FilterList와 겹치는 코드! 리펙토링 요망
+    console.log(filterId);
+    const hasId = selectedList.includes(filterId);
+    if (hasId) {
+      const nextFilterList = selectedList.filter(item => item !== filterId);
+      setSelectedList(nextFilterList);
+    }
+    if (!hasId) {
+      setSelectedList(prevSelected => [...prevSelected, filterId]);
+    }
+  };
+  // TODO: style color 정리하기
   return (
     <Wrapper>
       <FilterList
@@ -31,7 +47,10 @@ export default function Main() {
       />
       <ChartWrapper>
         <ResponsiveContainer>
-          <ComposedChart data={chartData}>
+          <ComposedChart
+            data={chartData}
+            onClick={handleChartClick as CategoricalChartFunc}
+          >
             <CartesianGrid stroke="#f5f5f5" />
             <XAxis dataKey="date" tick={{ fontSize: '0.7rem' }} />
             <YAxis

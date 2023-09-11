@@ -10,3 +10,9 @@ export interface RowChart {
 export interface IChart extends Chart {
   date: string;
 }
+
+export interface ComposedChartPayload {
+  activePayload: {
+    payload: IChart;
+  }[];
+}

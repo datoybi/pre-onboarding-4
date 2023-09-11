@@ -7,7 +7,6 @@ interface Props {
 }
 
 const FilterItem = ({ name, handleOnClick, selected }: Props) => {
-  console.log(selected);
   return (
     <Item selected={selected}>
       <button onClick={handleOnClick}>{name}</button>
