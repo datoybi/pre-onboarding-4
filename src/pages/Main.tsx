@@ -45,6 +45,7 @@ export default function Main() {
         selectedList={selectedList}
         setSelectedList={setSelectedList}
       />
+      {/* TODO: Chart 컴포넌트로 분리하기 */}
       <ChartWrapper>
         <ResponsiveContainer>
           <ComposedChart

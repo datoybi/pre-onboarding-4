@@ -10,6 +10,7 @@ const CustomTooltip = ({
     const [bar, _] = payload;
 
     return (
+      // TODO: 필요하지않은 className 제거하기
       <Wrapper className="custom-tooltip">
         <p className="desc">{bar.payload.id}</p>
         <p className="desc">Area: {bar.payload.value_area}</p>
